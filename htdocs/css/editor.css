@@ -1,0 +1,7 @@
+div#menu {
+	float: left; width: 200px
+}
+
+div#presentation-container {
+	overflow: hidden
+}

@@ -1,0 +1,64 @@
+<head>
+	<meta charset="utf-8">
+		
+	<script type="text/javascript" src="js/jquery/dist/jquery.min.js"></script>
+		
+	<script type="text/javascript" src="js/reveal.js/js/reveal.min.js"></script>
+	
+	<script type="text/javascript" src="js/reveal.js/lib/js/head.min.js"></script>
+	<script type="text/javascript" src="js/revealengine.js"></script>
+	<script type="text/javascript" src="js/editor.js"></script>
+		
+	<link rel="stylesheet" href="js/reveal.js/css/theme/sky.css" id="theme">
+	<link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+	<div id="menu" class="menu" id="menu">
+		<div>
+			<button id="createMain"/>create
+		</div>
+		<div>
+			<p>Controls</p>
+			<button id="addMain"/>add slide
+			<div id="addMenu">
+				<table>
+					<td>
+						<button id="addVertical"/>add vertical slide
+					</td>
+					<td>
+						<button id="addHorizontal"/>add horizontal slide
+					</td>
+				</table>
+			</div>
+		</div>
+		<div>
+			<button id="deleteMain"/>delete slide
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td>
+						<button id="leftMain"/>to the left slide
+					</td>
+					<td>
+						<button id="rightMain"/>to the right slide
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button id="aboveMain"/>to above slide
+					</td>
+					<td>
+						<button id="belowMain"/>to below slide
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<button id="gotoMain"/>to slide
+		</div>
+	</div>
+	<!-- container for presentation -->
+	<div id="presentation-container">
+	</div>
+</body>
