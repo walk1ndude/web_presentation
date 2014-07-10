@@ -3,6 +3,9 @@ var RevealEngine = {
 	
 	InitReveal: function() {	
 		Reveal.initialize({
+			height: $(window).height(),
+			
+			width: $(window).width(),
 		    // Display controls in the bottom right corner
 		    controls: true,
 		
@@ -86,45 +89,12 @@ var RevealEngine = {
 		    ]	
 		});
 	},
-	
-	Slides: [],
 
 	InitPresentation: function() {
 	// some dummy pres
-		$("#presentation-container").html("<div class=\"reveal\">\
-			<div id=\"slides\" class=\"slides\">\
-	        	<section>\
-	        		<h2>loading lists items individually</h2>\
-	        		<ul>\
-						<li class=\"fragment\">List Item 1</li>\
-						<li class=\"fragment\">List Item 2</li>\
-						<li class=\"fragment\">List Item 3</li>\
-					</ul>\
-				</section>\
-				<section>\
-	            	<section>\
-	            		<p class=\"fragment grow\">grow</p>\
-	            	</section>\
-					<section>\
-						Vertical Slide 2\
-					</section>\
-				</section>\
-				<section data-markdown>\
-					<script type=\"text/template\">\
-						- Item 1 <!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->\
-						- Item 2 <!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->\
-					</script>\
-				</section>\
-				<section data-markdown>\
-					<script type=\"text/template\">\
-						## Page title\
-						A paragraph with some text and a [link](http://hakim.se).\
-					</script>\
-				</section>\
-			</div>\
-		</div>");
+		$("#presentation-container").html(RevealTemplates.Dummy);
 		
-		RevealEngine.InitReveal();		
+		RevealEngine.InitReveal();	
 	},
 	
 	IsInitialized: function() {
@@ -141,13 +111,13 @@ var RevealEngine = {
 		
 		var verticalSlides = $(horizontalSlide).children("section");
 		
-		if (!verticalSlides.length) {
+		if (!!verticalSlides) {
 			$(horizontalSlide).html("<section>" + $(horizontalSlide).html() + "</section>");
 		}
 		
 		var currentSlide = $(horizontalSlide).children("section")[currentIndex.v];
 		
-		$(currentSlide).after("<section>New vertical slide</section>");
+		$(currentSlide).after(RevealTemplates.NewVerticalSlide);
 		
 		Reveal.slide(currentIndex.h, currentIndex.v + 1);
 		
@@ -159,7 +129,7 @@ var RevealEngine = {
 		
 		var currentSlide = $("#slides").children("section")[currentIndex.h];
 		
-		$(currentSlide).after("<section>New horizontal slide</section>");
+		$(currentSlide).after(RevealTemplates.NewHorizontalSlide);
 		
 		Reveal.slide(currentIndex.h + 1, currentIndex.v);
 		
@@ -176,7 +146,7 @@ var RevealEngine = {
 		
 		var verticalSlides = $(horizontalSlide).children("section");
 		
-		if (!verticalSlides.length) {
+		if (!!verticalSlides) {
 			$(horizontalSlide).remove();
 			
 			currentIndex.h --;
