@@ -13,12 +13,14 @@ function slideControl(config) {
 function showMenu(x) {
 	var wMenu = $(window).width() * 0.2;
 
-	if (x <= wMenu) {
+	if ($("#menu").css("visibility") == "visible") {
+		if (x > wMenu) {
+			$("#menu").css("width", "0px");
+			$("#menu").css("visibility", "hidden");
+		}
+	} else if (x < 5) {
 		$("#menu").css("width", wMenu + "px");
-		$("#menu").css("visibility", "visible");
-	} else {
-		$("#menu").css("width", "0px");
-		$("#menu").css("visibility", "hidden");
+		$("#menu").css("visibility", "visible");	
 	}
 }
 
