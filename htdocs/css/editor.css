@@ -1,11 +1,7 @@
 div#menu {
-	float: left; width: 200px
+	float: left
 }
 
 div#presentation-container {
 	overflow: hidden
-}
-
-div#addMenu {
-	visibility: visible
 }

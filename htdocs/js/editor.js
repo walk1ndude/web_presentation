@@ -10,14 +10,21 @@ function slideControl(config) {
 	}
 }
 
+function showMenu(x) {
+	var wMenu = $(window).width() * 0.2;
+
+	if (x <= wMenu) {
+		$("#menu").css("width", wMenu + "px");
+		$("#menu").css("visibility", "visible");
+	} else {
+		$("#menu").css("width", "0px");
+		$("#menu").css("visibility", "hidden");
+	}
+}
+
 $(document).ready(function(){	
 	$("#createMain").on("click", Engine.InitPresentation);
-	
-	$("#addMain").on("click", function() {
-		$("#addVertical").toggle();
-		$("#addHorizontal").toggle();
-	});
-	
+
 	$("#addVertical").on("click", Engine.AddVerticalSlide);
 	$("#addHorizontal").on("click", Engine.AddHorizontalSlide);
 	
@@ -32,6 +39,10 @@ $(document).ready(function(){
 	$(document).on("dblclick", "#presentation-container", Engine.EditSlide);
 	
 	$(document).on("mousedown", "div:not(.presentation-container)", Engine.FinishEdit);
+	
+	$(document).on("mousemove", function(event) {
+		showMenu(event.pageX);
+	});
 	
 	var ws = new WebSocket(wsUrl);
     
