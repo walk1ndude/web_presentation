@@ -1,8 +1,8 @@
-RevealTemplates = {
+var RevealTemplates = {
 	Dummy: "<div class=\"reveal\">\
 			<div id=\"slides\" class=\"slides\">\
 	        	<section>\
-	        		<h1>loading lists items individually</h1>\
+	        		<h1 class=\"slideHeader\">loading lists items individually</h1>\
 	        		<ul>\
 						<li class=\"fragment\">List Item 1</li>\
 						<li class=\"fragment\">List Item 2</li>\
@@ -32,7 +32,7 @@ RevealTemplates = {
 			</div>\
 		</div>",
 		
-	NewVerticalSlide: "<section><h1>New slide header</h1>Content of new vertical slide</section>",
+	NewVerticalSlide: "<section><h1 class=\"slideHeader\">New slide header</h1>Content of new vertical slide</section>",
 	
-	NewHorizontalSlide: "<section><h1>New slide header</h1>Content of new horizontal slide</section>"
+	NewHorizontalSlide: "<section><h1 class=\"slideHeader\">New slide header</h1>Content of new horizontal slide</section>"
 }

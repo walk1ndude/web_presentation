@@ -5,3 +5,10 @@ div#menu {
 div#presentation-container {
 	overflow: hidden
 }
+
+h1.slideHeader {
+	text-align:center;
+	font-weight: bold;
+	color: #fff;
+	font-size: 84px;
+}
