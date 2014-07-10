@@ -2,13 +2,13 @@ var Engine = RevealEngine;
 
 var wsUrl = "ws://localhost:8888";
 
-var checkInterval = 1000;
-
 function slideControl(config) {
 	alert(config)
 	
-	if (config["type"] == "webpres") {
-		Engine.GoToSlide(config["slideIndex"])
+	if (Engine.IsInitialized) {
+		if (config["type"] == "webpres") {
+			Engine.GoToSlide(config["slideIndex"])
+		}
 	}
 }
 
@@ -23,7 +23,7 @@ $(document).ready(function(){
 	$("#addVertical").on("click", Engine.AddVerticalSlide);
 	$("#addHorizontal").on("click", Engine.AddHorizontalSlide);
 	
-	$("#deleteMain").on("click", Engine.DeleteCurrentSlide);
+	$("#removeMain").on("click", Engine.RemoveCurrentSlide);
 	
 	$("#leftMain").on("click", Engine.GoToLeftSlide);
 	$("#rightMain").on("click", Engine.GoToRightSlide);
@@ -36,11 +36,4 @@ $(document).ready(function(){
     ws.onmessage = function(evt) {
     	slideControl($.parseJSON(evt.data))
     }
-	/*
-	$.getJSON(urlCfg, function(config) {
-		for(var property in config) {
-			slides.property = config[property];
-		}
-		console.log(slides); 
-	});*/
 });

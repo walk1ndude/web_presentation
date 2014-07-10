@@ -67,7 +67,7 @@ var RevealEngine = {
 		    backgroundTransition: 'default', // default/none/slide/concave/convex/zoom
 		
 		    // Number of slides away from the current that are visible
-		    viewDistance: 1,
+		    viewDistance: 0,
 		
 		    // Parallax background image
 		    parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
@@ -86,11 +86,14 @@ var RevealEngine = {
 		    ]	
 		});
 	},
+	
+	Slides: [],
 
 	InitPresentation: function() {
+	// some dummy pres
 		$("#presentation-container").html("<div class=\"reveal\">\
 			<div id=\"slides\" class=\"slides\">\
-	        	<section id=\"slide0#0\">\
+	        	<section>\
 	        		<h2>loading lists items individually</h2>\
 	        		<ul>\
 						<li class=\"fragment\">List Item 1</li>\
@@ -99,20 +102,20 @@ var RevealEngine = {
 					</ul>\
 				</section>\
 				<section>\
-	            	<section id=\"slide1#0\">\
+	            	<section>\
 	            		<p class=\"fragment grow\">grow</p>\
 	            	</section>\
-					<section id=\"slide1#1\">\
+					<section>\
 						Vertical Slide 2\
 					</section>\
 				</section>\
-				<section data-markdown id=\"slide2#0\">\
+				<section data-markdown>\
 					<script type=\"text/template\">\
 						- Item 1 <!-- .element: class=\"fragment\" data-fragment-index=\"2\" -->\
 						- Item 2 <!-- .element: class=\"fragment\" data-fragment-index=\"1\" -->\
 					</script>\
 				</section>\
-				<section data-markdown id=\"slide3#0\">\
+				<section data-markdown>\
 					<script type=\"text/template\">\
 						## Page title\
 						A paragraph with some text and a [link](http://hakim.se).\
@@ -120,27 +123,77 @@ var RevealEngine = {
 				</section>\
 			</div>\
 		</div>");
-		RevealEngine.InitReveal();
+		
+		RevealEngine.InitReveal();		
+	},
+	
+	IsInitialized: function() {
+		return $("#reveal").length();	
 	},
 	
 	AddVerticalSlide: function() {
-		var currentSlide = Reveal.getIndices();
-		console.log(currentSlide);
-		$("#slides").append("<section id=\"slide" + currentSlide.h + "#" + (++ currentSlide.v) + "\">\
-			New test vertical slide</section>");
+		var currentIndex = Reveal.getIndices();
+		if (!currentIndex.v) {
+			currentIndex.v = 0;
+		}
+		
+		var horizontalSlide = $("#slides").children("section")[currentIndex.h];
+		
+		var verticalSlides = $(horizontalSlide).children("section");
+		
+		if (!verticalSlides.length) {
+			$(horizontalSlide).html("<section>" + $(horizontalSlide).html() + "</section>");
+		}
+		
+		var currentSlide = $(horizontalSlide).children("section")[currentIndex.v];
+		
+		$(currentSlide).after("<section>New vertical slide</section>");
+		
+		Reveal.slide(currentIndex.h, currentIndex.v + 1);
 	},
 	
 	AddHorizontalSlide: function() {
-		var currentSlide = Reveal.getIndices();
-		console.log(currentSlide);
-		$("#slides").append("<section id=\"slide" + (++ currentSlide.h) + "#" + currentSlide.v + "\">\
-			New test horizontal slide</section>");
+		var currentIndex = Reveal.getIndices();
+		if (!currentIndex.v) {
+			currentIndex.v = 0;
+		}
+		
+		var currentSlide = $("#slides").children("section")[currentIndex.h];
+		
+		$(currentSlide).after("<section>New horizontal slide</section>");
+		
+		Reveal.slide(currentIndex.h + 1, currentIndex.v);
 	},
 	
-	DeleteCurrentSlide: function() {
-		var currentSlide = Reveal.getIndices();
-		console.log(currentSlide);
-		$("#slide" + currentSlide.h + "#" + currentSlide.v).remove();
+	RemoveCurrentSlide: function() {
+		var currentIndex = Reveal.getIndices();
+		if (!currentIndex.v) {
+			currentIndex.v = 0;
+		}
+		
+		var horizontalSlide = $("#slides").children("section")[currentIndex.h];
+		
+		var verticalSlides = $(horizontalSlide).children("section");
+		
+		if (!verticalSlides.length) {
+			$(horizontalSlide).remove();
+			
+			currentIndex.h --;
+			currentIndex.v = 0;
+		} else {
+			$(verticalSlides[currentIndex.v]).remove();
+			
+			// no more vertical -> go horizontal
+			if (verticalSlides.length == 2) {
+				$(horizontalSlide).html($(verticalSlides[1 - currentIndex.v]).html());
+				
+				currentIndex.v = 0;
+			}
+			
+			currentIndex.v --;
+		}
+		
+		Reveal.slide(currentIndex.h, currentIndex.v);
 	},
 	
 	GoToLeftSlide: function() {
@@ -161,7 +214,6 @@ var RevealEngine = {
 	
 	GoToSlide: function(slideIndex) {
 		var posHV = slideIndex.lastIndexOf("/")
-		console.log(slideIndex.substring(2, posHV), slideIndex.substring(posHV + 1))
 		Reveal.slide(slideIndex.substring(2, posHV), slideIndex.substring(posHV + 1))
 	}
 }
