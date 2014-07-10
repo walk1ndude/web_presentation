@@ -2,9 +2,7 @@ var Engine = RevealEngine;
 
 var wsUrl = "ws://localhost:8888";
 
-function slideControl(config) {
-	alert(config)
-	
+function slideControl(config) {	
 	if (Engine.IsInitialized) {
 		if (config["type"] == "webpres") {
 			Engine.GoToSlide(config["slideIndex"])
@@ -30,6 +28,10 @@ $(document).ready(function(){
 	
 	$("#aboveMain").on("click", Engine.GoToAboveSlide);
 	$("#belowMain").on("click", Engine.GoToBelowSlide);
+	
+	$(document).on("dblclick", "#presentation-container", Engine.EditSlide);
+	
+	$(document).on("mousedown", "div:not(.presentation-container)", Engine.FinishEdit);
 	
 	var ws = new WebSocket(wsUrl);
     

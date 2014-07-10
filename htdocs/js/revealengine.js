@@ -150,19 +150,20 @@ var RevealEngine = {
 		$(currentSlide).after("<section>New vertical slide</section>");
 		
 		Reveal.slide(currentIndex.h, currentIndex.v + 1);
+		
+		RevealEngine.EditSlide();
 	},
 	
 	AddHorizontalSlide: function() {
 		var currentIndex = Reveal.getIndices();
-		if (!currentIndex.v) {
-			currentIndex.v = 0;
-		}
 		
 		var currentSlide = $("#slides").children("section")[currentIndex.h];
 		
 		$(currentSlide).after("<section>New horizontal slide</section>");
 		
 		Reveal.slide(currentIndex.h + 1, currentIndex.v);
+		
+		RevealEngine.EditSlide();
 	},
 	
 	RemoveCurrentSlide: function() {
@@ -215,5 +216,19 @@ var RevealEngine = {
 	GoToSlide: function(slideIndex) {
 		var posHV = slideIndex.lastIndexOf("/")
 		Reveal.slide(slideIndex.substring(2, posHV), slideIndex.substring(posHV + 1))
+	},
+	
+	EditSlide: function() {
+		var currentSlide = $("#slides section.present");
+		
+		$(currentSlide).attr("contenteditable", true);
+		
+		$(currentSlide).focus();
+	},
+	
+	FinishEdit: function() {
+		var currentSlide = $("#slides section.present");
+		
+		$(currentSlide).attr("contenteditable", false);
 	}
 }

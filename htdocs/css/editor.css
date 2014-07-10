@@ -5,3 +5,7 @@ div#menu {
 div#presentation-container {
 	overflow: hidden
 }
+
+div#addMenu {
+	visibility: visible
+}
